@@ -1,5 +1,6 @@
 var express = require("express");
 var http = require("http");
+var mongo = require('mongodb').MongoClient;
 
 var app = express();
 var server = http.Server(app);
@@ -19,14 +20,14 @@ app.get("/style/index.css", function(req, res) {
 //connect socket io to show connected
 io.on("connection", function(socket) {
     var name = "";
-   
+    //connect socket io to show a connected user 
     socket.on("has connected", function(username){
         users.push(username);
         name = username;
         io.emit("has connected", {username: username, usersList: users});
         
     });
-    //connect socket io to show disconnected
+    //connect socket io to show disconnected when a user disconnnect
     socket.on("disconnect", function() {
       users.splice(users.indexOf(name), 1);
       io.emit("has disconnected", {username: name, usersList: users});
@@ -40,7 +41,9 @@ io.on("connection", function(socket) {
 
 });
 
-// port
+
+
+// connect to port 3333
 server.listen(3333, function(){
     console.log("Server running on port 3333");
 });

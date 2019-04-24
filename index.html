@@ -1,3 +1,8 @@
+ <!-- ********How To Run The Chat App ******
+ connect to mongodb database by  C:\Program Files\MongoDB\Server\4.0\bin and run mongod
+ run the app by node index.js 
+****************************************************************************************-->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +16,11 @@
     <title> Chat APP</title>
 </head>
 <body>
-
+    <!-- chat app skeleton -->
    <div id="login-area">
-
+    
        <div id="login-text"><h1>Login Page</h1></div>
-
+        <!-- login form area -->
        <div id="login-form-area">
            <form id="login-form">
                <input id="username" type="text" placeholder="Username" autocomplete="off">
@@ -26,17 +31,14 @@
 
    <div id="chat-area">
        <div id="users-area">
-           <div id="online-users-text">
-               <h1> <button id="clear" class="btn btn-danger">Clear Chat</button>
-                   <br>online-users
-               </h1>
-           </div>
-
+            <!-- online users area -->
            <div id="online-users">
+               <h1>Online Users</h1>
                <ul id="users"> </ul>
            </div>
        </div>
 
+       <!-- dispalay message sent -->
        <div id="message-area">
            <div id="dispay-message-area">
                <ul id="messages"></ul>
@@ -55,12 +57,14 @@
 <script type="text/javascript">
     var socket = io();
 
+    // update online users
 function updateUsers(list){
     for(var i = 0; i < list.length; i++) {
             $("#users").append("<li><b>" + list[i] + "</b></li>");
         }
 }
-
+    
+// login form validation
     $("#login-form").submit(function(event) {
             event.preventDefault();
 
@@ -78,6 +82,7 @@ function updateUsers(list){
         }
     });
 
+    // message validation, so it does not sent a blank message
     $("#message-form").submit(function(event){
         event.preventDefault();
 
